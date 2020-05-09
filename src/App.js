@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 
 
 function App() {
-  const [covidData, setCovidData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
 
   async function fetchData() {
-    const res = await fetch("https://covid19.mathdro.id/api/countries/KW", {
+    await fetch("https://covid19.mathdro.id/api/countries/KW", {
       method: "GET",
       headers: {
         Accept: "application/json"
@@ -19,7 +18,6 @@ function App() {
       })
       .then(data => {
         console.log(data);
-        setCovidData(data);
         prepareTable(data);
 
         setIsLoading(false);
@@ -28,6 +26,7 @@ function App() {
         console.log(error);
       });
   }
+  
 
   function prepareTable(data) {
     let headers = [];
@@ -46,6 +45,7 @@ function App() {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isLoading)
